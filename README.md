@@ -2,10 +2,10 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Retrieve match by id: ###
 
-* Quick summary
-* Version
+* request_url: http://example.com/api/match/9948393
+* method : GET
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
