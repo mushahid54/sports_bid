@@ -80,14 +80,19 @@ class MatchKeywordSerializer(serializers.ModelSerializer):
 
 
 class MatchCreateSerializer(serializers.ModelSerializer):
+    """
+        MatchCreateSerializer will create match object along with important object while checking the
+        validation of data with serializers.
+    """
+
+
     id = serializers.IntegerField(required=False)
     event = MatchCreateDataSerializer(required=False)
     message_type = serializers.CharField(required=False)
 
     class Meta:
         model = Matches
-        fields = ('id', 'message_type', 'event' )
-
+        fields = ('id', 'message_type', 'event')
 
     def create(self, validated_data):
         event = validated_data.get('event', None)
@@ -108,7 +113,7 @@ class MatchCreateSerializer(serializers.ModelSerializer):
                         selections = Selection.objects.create(id=selection['id'], matches=match_object, name=selection['name'],
                                                           odds=selection['odds'])
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class MatchUpdateSerializer(serializers.ModelSerializer):
@@ -118,15 +123,14 @@ class MatchUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Matches
-        fields = ('id', 'message_type', 'event' )
-
+        fields = ('id', 'message_type', 'event')
 
     def update(self, instance, validated_data):
         event = validated_data.get('event', None)
         market_name = validated_data.get('message_type', None)
         id = validated_data.get('id', None)
         if event:
-            market = Market.objects.create(name = market_name, id=id)
+            market = Market.objects.create(name=market_name, id=id)
             sport_obj = Sport.objects.create(name=event['sport']['name'], market=market)
             markets = event.get('markets', None)
             match_dictionary = {

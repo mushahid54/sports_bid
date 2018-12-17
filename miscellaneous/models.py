@@ -1,8 +1,8 @@
 from django.db import models
 
+
 class Market(models.Model):
     name = models.CharField(max_length=50)
-
 
     class Meta:
         app_label = 'miscellaneous'
@@ -12,6 +12,9 @@ class Market(models.Model):
 
 
 class Sport(models.Model):
+    """
+        Sport Details will be shared in market where user can start bidding.
+    """
     name = models.CharField(max_length=50)
     market = models.OneToOneField(Market, on_delete=models.PROTECT)
 
@@ -23,6 +26,9 @@ class Sport(models.Model):
 
 
 class Matches(models.Model):
+    """
+        Match details with sport name.
+    """
     id = models.IntegerField(primary_key=True)
     sport = models.ForeignKey(Sport, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
@@ -36,6 +42,9 @@ class Matches(models.Model):
 
 
 class Selection(models.Model):
+    """
+        Multiple Selection as bidding can be for one match.
+    """
     id = models.IntegerField(primary_key=True)
     matches = models.ForeignKey(Matches, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
